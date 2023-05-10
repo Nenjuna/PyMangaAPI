@@ -28,34 +28,17 @@ def update_chapter(db: Session, chapter, subtitle, mangaid, pages):
     print(_chapt)
     return _chapt
 
-    # _chapter = crudchapter.create_chapter(db, chapter=_chapt)
-    # db.add(_chapter)
-    # db.commit()
-    # db.refresh()
-
 
 def read_json(file, db):
     data = json.load(file)
-    arr = []
-    sortedarray = []
     for key, value in data.items():
-        arr.append(key)
-
-    sortedarray = sorted(arr, key=lambda x: float(
-        x.replace("Black Clover, Chapter ", "")))
-    print('Started')
-    for i in range(len(sortedarray)):
-        chap = sortedarray[i]
-
-        subtitle = data[chap]['chapter_name'] if (
-            len(data[chap]['chapter_name']) > 1) else "No Subtitle"
-
-        pages = ",".join(x['src'] for x in data[chap]['chapters'])
-
-        update_chapter(db, chapter=chap, subtitle=subtitle,
+        chapter = float(key.replace('Black Clover, Chapter ', ""))
+        subtitle = value['chapter_name']
+        pages = ",".join(x['src'] for x in value['chapters'])
+        update_chapter(db, chapter=chapter, subtitle=subtitle,
                        pages=pages, mangaid=1)
 
-    print('Finished')
+    print("Finished")
 
 
 @router_upload.post("/update")

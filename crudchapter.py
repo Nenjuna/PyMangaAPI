@@ -20,7 +20,7 @@ def create_chapter(db: Session, chapter: ChaptersSchema):
     return _chapter
 
 
-def update_chapter(db: Session, chapter_id: int, subtitle: str, chapter: str, mangaid: int, pages: str):
+def update_chapter(db: Session, chapter_id: int, subtitle: str, chapter: float, mangaid: int, pages: str):
     _chapter = get_chapter_by_id(db=db, chapter_id=chapter_id)
     _chapter.subtitle = subtitle
     _chapter.chapter = chapter
